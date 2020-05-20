@@ -5,7 +5,8 @@ description: > # this means to ignore newlines until "show_exerpts:"
     Hi! I am Shubh Gupta, an Incoming Software Developer at Dream11 and your very host.
     This blog contains my cheatsheets and hacking experience! :)
 show_excerpts: true # set to true to show excerpts on the homepage
-baseurl: /blog
+baseurl: "/blog"
+url:    "https://shubhgupta2125.github.io"
 
 # Minima date format
 # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this

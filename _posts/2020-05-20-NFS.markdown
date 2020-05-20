@@ -12,7 +12,7 @@ categories: NFS VirtualBox FreeBSD
 * Ubuntu Host's IP  - 192.168.56.1
 * FreeBSD VM's IP - 192.168.56.105
 
-## Setting up the NFS server on the FreeBSD VM
+## 1. Setting up the NFS server on the FreeBSD VM
 
 First of all, lets start by adding the necessary configurations to the **/etc/rc.conf** by using sysrc as follows: 
 
@@ -44,7 +44,7 @@ You can view the mountpoints with:
 ```sh
 $ showmounts -e
 ```
-## Setting up the NFS client on the Ubuntu Host
+## 2. Setting up the NFS client on the Ubuntu Host
 
 First of all install the required packages
 ```

@@ -1,0 +1,25 @@
+I"*
+<p><strong>NFS (Network File System)</strong> is a protocol allowing remote access to a filesystem through the network. For my paricular usecase, I wanted to have a shared FreeBSD directory so that I can easily edit it on my Linux machine(where I am comfortable) and see the changes be reflected on the FreeBSD VirtualBox Machine. This would help me have my comfortable development environement and also saves me from the hassle of setting up a development environment on the virtualbox machine.</p>
+
+<p><strong>NOTE:</strong> I used the Host-only adapter in the virtualbox and the following IP addresses were assigned:</p>
+<ul>
+  <li>Linux Host’s IP  - 192.168.56.1</li>
+  <li>FreeBSD VM’s IP - 192.168.56.105
+    <h2 id="setting-up-the-nfs-server">Setting up the NFS server</h2>
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">echo</span> <span class="s2">"Hello World"</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam qui voluptatem excepturi nemo similique atque sapiente aperiam, dolorum deleniti! Esse quam perferendis temporibus nemo at molestias necessitatibus tenetur cupiditate sapiente. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil et voluptatibus non labore officiis assumenda, distinctio perspiciatis blanditiis nesciunt rerum molestias impedit fugiat nulla qui libero minima quasi! Libero, iure.</p>
+
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">body</span> <span class="p">{</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s1">'Nunito Sans'</span><span class="o">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+	<span class="nl">line-height</span><span class="p">:</span> <span class="m">1</span><span class="mi">.5em</span><span class="p">;</span>
+	<span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+	<span class="na">-webkit-font-smoothing</span><span class="p">:</span> <span class="n">antialiased</span><span class="p">;</span>
+	<span class="na">-moz-osx-font-smoothing</span><span class="p">:</span> <span class="n">grayscale</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam rerum, ratione impedit necessitatibus facere soluta odio repellat asperiores neque! Sunt iusto quia suscipit amet inventore eum, vel molestiae reiciendis alias.</p>
+:ET

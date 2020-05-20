@@ -1,0 +1,51 @@
+I"�<p><strong>NFS (Network File System)</strong> is a protocol allowing remote access to a filesystem through the network. For my paricular usecase, I wanted to have a shared FreeBSD directory so that I can easily edit it on my Linux machine(where I am comfortable) and see the changes be reflected on the FreeBSD VirtualBox Machine. This would help me have my comfortable development environement and also saves me from the hassle of setting up a development environment on the virtualbox machine.</p>
+
+<p><strong>NOTE:</strong> I used the Host-only adapter in the virtualboxi(vboxnet0) and the following IP addresses were assigned:</p>
+<ul>
+  <li>Ubuntu Host’s IP  - 192.168.56.1</li>
+  <li>FreeBSD VM’s IP - 192.168.56.105</li>
+</ul>
+
+<h2 id="setting-up-the-nfs-server-on-the-freebsd-vm">Setting up the NFS server on the FreeBSD VM</h2>
+
+<p>First of all, lets start by adding the necessary configurations to the <strong>/etc/rc.conf</strong> by using sysrc as follows:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>sysrc <span class="nv">nfs_server_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">$ </span>sysrc <span class="nv">rpcbind_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">$ </span>sysrc <span class="nv">mountd_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+
+</code></pre></div></div>
+<p>Now we need to specify the directory to be shared and the IP address of the clients to which it should be shared in the <strong>/etc/exports</strong> file.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>/usr/src <span class="nt">-alldirs</span> <span class="nt">-maproot</span><span class="o">=</span>root <span class="nt">-network</span> 192.168.56.1 <span class="nt">-mask</span> 255.255.255.0
+</code></pre></div></div>
+<p>To elaborate on to why these flags are used:</p>
+<ul>
+  <li><strong>maproot</strong> - The credential of the specified user is used	for remote access by root.  The	credential includes all	the groups to which the	user
+   is	a member on the	local machine.  The	user may be specified
+   by	name or	number.	 The user string may be	quoted,	or use backslash escaping.</li>
+  <li><strong>alldirs</strong> - allows the host(s) to mount at any point within the file system, including regular files if the -r option is
+   used on mountd(8)</li>
+</ul>
+
+<p>Now just run the following to start the NFS server with the specified mounts:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>service nfsd start
+<span class="nv">$ </span>service mountd reload      <span class="c">#To make the export changes take effect </span>
+</code></pre></div></div>
+<p>You can view the mountpoints with:</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>showmounts <span class="nt">-e</span>
+</code></pre></div></div>
+<h2 id="setting-up-the-nfs-client-on-the-ubuntu-host">Setting up the NFS client on the Ubuntu Host</h2>
+
+<p>First of all install the required packages</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt install nfsd-kernel-server
+</code></pre></div></div>
+<p>Ensure that the firewall is disabled(ufw or firewalld) or allows the NFS packets. Now mount the directory. In my case I will use <strong>/nfs</strong> as the directory to mount the shared directory on the Ubuntu NFS client.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> nfs
+</code></pre></div></div>
+<p>Finally, I am able to use the shared directory on my Ubuntu.</p>
+
+<p><strong>Thanks! Happy coding :)</strong></p>
+:ET

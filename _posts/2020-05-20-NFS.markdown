@@ -42,7 +42,7 @@ $ service mountd reload      #To make the export changes take effect
 ```
 You can view the mountpoints with:
 ```sh
-$ showmounts -e
+$ showmount -e
 ```
 ## 2. Setting up the NFS client on the Ubuntu Host
 
@@ -50,10 +50,11 @@ First of all install the required packages
 ```
 $ sudo apt install nfsd-kernel-server
 ```
-Ensure that the firewall is disabled(ufw or firewalld) or allows the NFS packets. Now mount the directory. In my case I will use **/nfs** as the directory to mount the shared directory on the Ubuntu NFS client.
+Ensure that the firewall is disabled(ufw or firewalld) or allows the NFS packets. Now mount the directory. In my case I will use **/nfs** as the directory to mount the shared directory on the Ubuntu NFS client. It is important to ensure that the same version of NFS is used on the client as on the server. In my case, the NFSv3 was used at the server side. It is good to specify the NFS version by using the **-o** flag. Specify the command in the following manner to mount the shared
+directory.
 
 ```sh
-$ sudo mount -t nfs
+$ sudo mount -o vers=3 192.168.56.105:/usr/src /nfs/freebsd
 ```
 Finally, I am able to use the shared directory on my Ubuntu.
 

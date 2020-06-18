@@ -1,2 +1,0 @@
-I"ã<p>NFS (Network File System) is a protocol allowing remote access to a filesystem through the network. For my paricular usecase, I wanted to have a shared FreeBSD directory so that I can easily edit it on my Linux machine(where I am comfortable) and see the changes be reflected on the FreeBSD VirtualBox Machine. This would help me have my comfortable development environement and also saves me from the hassle of setting up a development environment on the virtualbox machine.</p>
-:ET

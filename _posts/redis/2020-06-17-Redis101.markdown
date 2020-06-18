@@ -48,7 +48,7 @@ Multiple database calls create imossibly slow web pages response times.
 * GET to retrieve values.
 * Strings store text, numbers, binary.
 
-### Redis Cache Superpowers
+### 1.Redis Cache Superpowers
 
 * All keys can have an expiry.
 * You can register to listen for changes on keys and operations.
@@ -61,7 +61,7 @@ Multiple database calls create imossibly slow web pages response times.
 * **Least Recently Used(LRU)** - It means that when I dont have a room, I will evict the key which has been least recently used.
 * **DEL vs UNLINK** DEL frees the memory synchornously and might have some delay for large data. The case of UNLINK has been explained above.
 
-### User Sessions
+### 2.User Sessions
 
 **The Problem**
 * Mantain session state across multiple servers.
@@ -77,7 +77,7 @@ Multiple database calls create imossibly slow web pages response times.
 
 **Variadic Commands** are the commands which allow us to set variable arguments. For Ex. HSET
 
-### Managing Queues of Work
+### 3.Managing Queues of Work
 
 **The Problem**
 * Task needs to be worked on async to reduce block/wait times.
@@ -92,7 +92,7 @@ Multiple database calls create imossibly slow web pages response times.
 * RPOPLPUSH - pop an item from one queue and pushes it to another queue
 **NOTE** - RPOPLPUSH is an atomic command. There is no way to lose data. Also, there are no commands like LPOPRPUSH etc, only RPOPLPUSH is valid.
 
-### Real-time Recommendation Engine
+### 4.Real-time Recommendation Engine
 
 **The Problem**
 * People who read this article also read these other articles
@@ -108,9 +108,8 @@ Multiple database calls create imossibly slow web pages response times.
 * SINTER to find similar articles tagged with the same tags
 
 **NOTE** - An important point to note hera is that SMEMBERS returns all of the data i.e you cannot specy the number of articles you want it to return. It returns an uncapped amount of data. Hence, we should make sure to use SCARD to check the amount of data that redis will return and be prepared for it. It could be of the order of thousands.
-### Sorted sets for leaderboards
 
-### Sorted Sets for Leaderboards
+### 5.Sorted Sets for Leaderboards
 
 **The Problem**
 * MANY users playing a game or collecting points
@@ -125,7 +124,7 @@ Multiple database calls create imossibly slow web pages response times.
 * ZRANGE, ZREVRANGE to get user
 * ZRANK will get any user's rank instantaneously
 
-### Search By Location
+### 6.Search By Location
 
 **The Problem**
 * Give me all the pharmacies in a range of 2 km radius
@@ -138,7 +137,7 @@ Multiple database calls create imossibly slow web pages response times.
 * GEODIST to get distance
 * GEORADIUS to get locations in a radius
 
-### Sending Information to multiple places
+### 7.Sending Information to multiple places
 
 **The Problem**
 * IoT device sending sensor information to multiple services

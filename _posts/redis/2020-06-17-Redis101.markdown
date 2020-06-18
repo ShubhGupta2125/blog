@@ -1,0 +1,161 @@
+---
+layout: post
+title:  "Redis 101"
+description: Getting started with Redis
+date:   2020-06-17 12:00:00 +0530
+categories: Redis 
+---
+Hi! Welcome to my blog post on Redis. I am writing this post while learning the basics of Redis and caching.
+
+## Introduction
+
+* **Redis** - REmote DIctionary Server
+* It is a leading in-memory database platform. Written in clean C code, and can be understood from the source.
+* Sits between the Relational Database structure and the Pure Key-Value Structure.
+* Different types of data structures that can be stored in Redis are:
+    - Strings
+    - Bitmaps
+    - Bit Field
+    - Hashes
+    - Lists
+    - Sets
+    - Sorted Sets
+    - Geospatial Indexes - Are a type of sorted set, used to store lati/long information.
+    - Hyperloglog - Estimates cardinality without having to store everything
+    - Streams - Series of hashmap like objects, stored in a tight sequence order.
+
+## Installing Redis
+
+### Linux
+```sh
+apt-get install redis-server
+```
+
+### macOS
+```sh
+brew intsall redis
+```
+## Why Redis?
+
+### Simple Cache
+
+**The Problem**
+Multiple database calls create imossibly slow web pages response times.
+
+**How Redis solves it**
+* Strings are perfect for this.
+* SET lets us save data as key/value pairs.
+* GET to retrieve values.
+* Strings store text, numbers, binary.
+
+### Redis Cache Superpowers
+
+* All keys can have an expiry.
+* You can register to listen for changes on keys and operations.
+* Multiple eviction policies supported.
+
+**NOTE** - Redis is a single threaded server, which means we can do only one thing at a time.
+
+* Since, freeing up memory(supposedly for a large data) requires a lot of time, Redis has a functionality of **UNLINK** which means, it removes the ability of some data to be referenced and frees up the memory later at some point of time when the thread is free.
+* **EXPIRE** command can be used to expire a key in some time. Since there can be many keys to be expired at the same exact time, we cannot be sure of the exactness of this expiry.
+* **Least Recently Used(LRU)** - It means that when I dont have a room, I will evict the key which has been least recently used.
+* **DEL vs UNLINK** DEL frees the memory synchornously and might have some delay for large data. The case of UNLINK has been explained above.
+
+### User Sessions
+
+**The Problem**
+* Mantain session state across multiple servers.
+* Multiple session variables
+* High speed/low latency required
+
+**How Redis solves it**
+* Hashes are perfect for this (saving session variables)
+* **HSET** lets you save session variables as key/value pairs
+* **HMGET** to retrieve values
+* **HINCRBY** to increment any field within the hash structure
+* **HDEL** to delete one field/value
+
+**Variadic Commands** are the commands which allow us to set variable arguments. For Ex. HSET
+
+### Managing Queues of Work
+
+**The Problem**
+* Task needs to be worked on async to reduce block/wait times.
+* Lots of items to be worked on.
+* Assign items to orker process and remove from queue at the same time
+* Similar to buffering high speend data-ingestion
+* High speed/low latency required
+
+**How Redis solves it**
+* Lists are perfect for this!
+* LPUSH, RPUSH add values at beginning or end of queue.
+* RPOPLPUSH - pop an item from one queue and pushes it to another queue
+**NOTE** - RPOPLPUSH is an atomic command. There is no way to lose data. Also, there are no commands like LPOPRPUSH etc, only RPOPLPUSH is valid.
+
+### Real-time Recommendation Engine
+
+**The Problem**
+* People who read this article also read these other articles
+* Want real time not data mining
+* Recommending similar purchases
+* Identifying Fraud
+
+**How Redis solves it**
+* SETS are unique collection of stirngs
+* SADD to add tags to each article
+* SISMEMBER to check if an article has a given tag
+* SMEMBERS to get all the tags for an article
+* SINTER to find similar articles tagged with the same tags
+
+**NOTE** - An important point to note hera is that SMEMBERS returns all of the data i.e you cannot specy the number of articles you want it to return. It returns an uncapped amount of data. Hence, we should make sure to use SCARD to check the amount of data that redis will return and be prepared for it. It could be of the order of thousands.
+### Sorted sets for leaderboards
+
+### Sorted Sets for Leaderboards
+
+**The Problem**
+* MANY users playing a game or collecting points
+* Display real time leaderbaord
+* Who is your nearest competition
+* Disk-based DB is too slow
+
+**How Redis solves it**
+* Sorted Sets are perfect for this
+* Automatically keeps the list of userd sorted by score
+* ZADD to add/update
+* ZRANGE, ZREVRANGE to get user
+* ZRANK will get any user's rank instantaneously
+
+### Search By Location
+
+**The Problem**
+* Give me all the pharmacies in a range of 2 km radius
+* How far am I from the hospital
+
+**How Redis solves it**
+* Geoset is perfect
+* Stores location as a Geohash
+* GEOADD to add a location to the Geoset
+* GEODIST to get distance
+* GEORADIUS to get locations in a radius
+
+### Sending Information to multiple places
+
+**The Problem**
+* IoT device sending sensor information to multiple services
+* App sending out messages about activities to multiple users
+
+**How Redis solves it**
+* Pub/Sub is the way to go
+* Lightweight way of distributing messages
+* No polling, it waits for messages
+* PUBLISH to send messages
+* SUBCRIBE to get messages
+
+**Broadcasting messages with Publish/Subscribe**
+* redis is a Pub/Sub server
+* Fire and forget
+* Not durable or persistent
+* No way to recover messages sent out to offline machines
+
+
+**Thanks! Happy coding :)**
